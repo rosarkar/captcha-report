@@ -1,0 +1,326 @@
+import React from 'react';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+} from 'recharts';
+import { AlertTriangle, Shield, Coins, ArrowUp } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+
+const COLORS = ['#e63946', '#457b9d', '#1d3557', '#a8dadc', '#2a9d8f'];
+
+const marketShareData = [
+  { name: 'reCAPTCHA', value: 43 },
+  { name: 'hCaptcha', value: 15 },
+  { name: 'Cloudflare Turnstile', value: 12 },
+  { name: 'AWS WAF', value: 5 },
+  { name: 'Others', value: 25 },
+];
+
+const growthData = [
+  { year: '2022 Q1', reCAPTCHA: 100, hCaptcha: 100, cloudflare: 100 },
+  { year: '2022 Q4', reCAPTCHA: 110, hCaptcha: 166.67, cloudflare: 300 },
+  { year: '2023 Q2', reCAPTCHA: 105, hCaptcha: 266.67, cloudflare: 600 },
+  { year: '2023 Q4', reCAPTCHA: 95, hCaptcha: 333.33, cloudflare: 700 },
+  { year: '2024 Q1', reCAPTCHA: 90, hCaptcha: 383.33, cloudflare: 750 },
+];
+
+const sources = [
+  {
+    name: 'Baymard Institute E-commerce UX Research',
+    url: 'https://baymard.com/blog/captchas-in-checkout',
+    year: '2018',
+  },
+  {
+    name: 'Cloudflare "End of CAPTCHAs" Report',
+    url: 'https://blog.cloudflare.com/introducing-cryptographic-attestation-of-personhood/',
+    year: '2021',
+  },
+  {
+    name: 'OpenAI GPT-4 Technical Report',
+    url: 'https://cdn.openai.com/papers/gpt-4.pdf',
+    year: '2023',
+  },
+  {
+    name: 'MIT Technology Review - Death to CAPTCHAs',
+    url: 'https://www.technologyreview.com/2023/10/24/1081139/captchas-ai-websites-computing/',
+    year: '2023',
+  },
+  {
+    name: 'Wall Street Journal - CAPTCHAs Getting Harder',
+    url: 'https://www.wsj.com/lifestyle/captcha-not-robot-tests-harder-5129caf2',
+    year: '2024',
+  },
+  {
+    name: 'BuiltWith Technology Trends',
+    url: 'https://trends.builtwith.com/widgets/captcha',
+    year: '2024',
+  },
+];
+
+const CaptchaReport = () => {
+  return (
+    <div className="max-w-4xl mx-auto p-8 space-y-12">
+      <header className="text-center mb-12">
+        <h1 className="text-4xl font-bold mb-4">CAPTCHA Market Analysis 2024</h1>
+        <p className="text-xl text-gray-600">
+          Interactive Report & Industry Insights
+        </p>
+      </header>
+
+      <Card className="mb-8">
+        <CardContent className="p-6">
+          <div className="flex items-center mb-2">
+            <Coins className="mr-2 text-green-600" />
+            <h2 className="text-lg font-semibold">Untapped Market Opportunity</h2>
+          </div>
+          <div className="space-y-2">
+            <p className="font-bold text-green-700 mb-2">
+              Current Market Inefficiency:
+            </p>
+            <ul className="space-y-2">
+              <li>• 4.6B internet users engaging with CAPTCHAs every 10 days</li>
+              <li>• 500 human years of daily attention currently unutilized</li>
+              <li>
+                • 88% of users find CAPTCHAs frustrating, indicating significant
+                adoption potential for user-friendly rewarding systems
+              </li>
+              <li>
+                • Potentially billions in annual revenue from converting CAPTCHAs
+                into attention tokens or ad opportunities
+              </li>
+            </ul>
+            <p className="text-sm text-gray-600 mt-4">
+              Source: Cloudflare Research (2021) - "Cryptographic Attestation of Personhood"
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+
+      <section className="mb-12">
+        <h2 className="text-2xl font-bold mb-6">Market Share Distribution</h2>
+        <div className="h-80">
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart>
+              <Pie
+                data={marketShareData}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={120}
+                label
+              >
+                {marketShareData.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
+              <Tooltip />
+              <Legend />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+      </section>
+
+      <section className="mb-12">
+        <h2 className="text-2xl font-bold mb-6">Provider Market Evolution</h2>
+        <div className="bg-gray-50 p-4 rounded-lg mb-4">
+          <p className="text-sm">
+            Initial Market Positions (Q1 2022):
+          </p>
+          <ul className="text-sm mt-2 space-y-1">
+            <li>• reCAPTCHA: 4.5M websites</li>
+            <li>• hCaptcha: 150K websites</li>
+            <li>• Cloudflare Turnstile: 25K websites</li>
+          </ul>
+        </div>
+        <div className="h-80">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={growthData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="year" />
+              <YAxis
+                domain={[0, 'auto']}
+                tickFormatter={(value) => `${value}%`}
+              />
+              <Tooltip formatter={(value) => `${value}%`} />
+              <Legend />
+              <Line
+                type="monotone"
+                dataKey="reCAPTCHA"
+                stroke="#e63946"
+                name="reCAPTCHA"
+                strokeWidth={2}
+              />
+              <Line
+                type="monotone"
+                dataKey="hCaptcha"
+                stroke="#457b9d"
+                name="hCaptcha"
+                strokeWidth={2}
+              />
+              <Line
+                type="monotone"
+                dataKey="cloudflare"
+                stroke="#1d3557"
+                name="Cloudflare Turnstile"
+                strokeWidth={2}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      </section>
+
+      <Card className="mb-8">
+        <CardContent className="p-6">
+          <h3 className="text-xl font-bold mb-4 flex items-center">
+            <Shield className="mr-2 text-blue-600" />
+            Security Evolution & Resilience
+          </h3>
+          <ul className="space-y-4">
+            <li>
+              <span className="font-semibold">
+                Proven Effectiveness Against AI:
+              </span>
+              <p className="text-sm mt-1">
+                Even advanced AI models like GPT-4 cannot solve CAPTCHAs directly, demonstrating their continued effectiveness as a human verification tool. In documented cases, AI systems have had to resort to hiring human workers to bypass these challenges.
+              </p>
+              <p className="text-xs text-gray-600 mt-1">
+                Source: OpenAI GPT-4 Technical Report, 2023
+              </p>
+            </li>
+            <li>
+              <span className="font-semibold">Enduring Market Position:</span>
+              <p className="text-sm mt-1">
+                "CAPTCHAs will continue to exist as a cheap, platform-­agnostic, and universal verification solution," according to Penn State University researchers. Their cost-effectiveness and universal applicability ensure their ongoing relevance.
+              </p>
+              <p className="text-xs text-gray-600 mt-1">
+                Source: MIT Technology Review, 2023
+              </p>
+            </li>
+            <li>
+              <span className="font-semibold">
+                Adaptive Security Features:
+              </span>
+              <p className="text-sm mt-1">
+                Modern CAPTCHAs are evolving to incorporate more sophisticated challenges that leverage human intuition and contextual understanding, staying ahead of automated solving attempts while maintaining accessibility.
+              </p>
+              <p className="text-xs text-gray-600 mt-1">
+                Source: Wall Street Journal - CAPTCHAs Getting Harder, 2024
+              </p>
+            </li>
+          </ul>
+        </CardContent>
+      </Card>
+
+      <div className="grid md:grid-cols-2 gap-8 mb-12">
+        <Card>
+          <CardContent className="p-6">
+            <h3 className="text-xl font-bold mb-4 flex items-center">
+              <AlertTriangle className="mr-2 text-red-600" />
+              User Experience Challenges
+            </h3>
+            <ul className="space-y-4">
+              <li className="flex items-center justify-between">
+                <span>First Attempt Failure Rate:</span>
+                <span className="font-bold text-red-600">8.66%</span>
+              </li>
+              <li className="flex items-center justify-between">
+                <span>Case-Sensitive Failure Rate:</span>
+                <span className="font-bold text-red-600">29.45%</span>
+              </li>
+              <li className="flex items-center justify-between">
+                <span>Average Completion Time:</span>
+                <span className="font-bold">32 seconds</span>
+              </li>
+              <li className="flex items-center justify-between">
+                <span>Users Finding CAPTCHAs Frustrating:</span>
+                <span className="font-bold text-red-600">88%</span>
+              </li>
+            </ul>
+          </CardContent>
+        </Card>
+      </div>
+
+      <Card className="mb-8">
+        <CardContent className="p-6">
+          <div className="flex items-center mb-2">
+            <ArrowUp className="mr-2 text-yellow-600" />
+            <h2 className="text-lg font-semibold">The Future: bAIr Protocol</h2>
+          </div>
+          <div className="space-y-4">
+            <p className="text-sm">
+              As CAPTCHAs continue to evolve, innovative solutions are emerging to address both security and user experience challenges. The bAIr Protocol represents a paradigm shift in CAPTCHA technology - a decentralized marketplace where human attention becomes a valuable asset.
+            </p>
+            <div className="grid md:grid-cols-2 gap-4">
+              <a 
+                href="https://bairprotocol.xyz/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+              >
+                <h4 className="font-semibold mb-2">bAIr Protocol Overview →</h4>
+                <p className="text-sm text-gray-600">
+                  Explore how the decentralized CAPTCHA marketplace is revolutionizing human verification
+                </p>
+              </a>
+              <a 
+                href="https://rosarkar.github.io/burger-captcha/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+              >
+                <h4 className="font-semibold mb-2">Interactive Demo →</h4>
+                <p className="text-sm text-gray-600">
+                  Experience the next generation of engaging, rewarding CAPTCHA challenges
+                </p>
+              </a>
+            </div>
+            <div className="mt-4 p-4 bg-gray-50 rounded border border-gray-200">
+              <p className="text-sm text-gray-700">
+                <span className="font-semibold">Key Innovation:</span> By tokenizing human attention and creating a marketplace for AI training data, bAIr Protocol transforms CAPTCHAs from a friction point into a value-generating opportunity for users.
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <section className="mt-16">
+        <h2 className="text-2xl font-bold mb-6">Sources & References</h2>
+        <div className="space-y-4">
+          {sources.map((source, index) => (
+            <div key={index} className="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg">
+              <div className="flex-1">
+                <h3 className="font-semibold text-gray-900">{source.name}</h3>
+                <a 
+                  href={source.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-blue-600 hover:underline"
+                >
+                  {source.url}
+                </a>
+              </div>
+              <div className="text-sm text-gray-500 whitespace-nowrap">
+                {source.year}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default CaptchaReport;
